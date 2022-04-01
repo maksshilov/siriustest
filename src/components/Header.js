@@ -1,18 +1,18 @@
 import React from 'react'
-import {Dimensions, View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+// components etc
+import { colors, windowWidth } from '../styles/variables'
 
-const {width: windowWidth, height: windowHeight} = Dimensions.get('window')
-
-export default function Header({title, goBack = false, navigation, bgColor = '#e5e5e5'}) {
+export default function Header({ title, goBack = false, navigation, bgColor = '#e5e5e5' }) {
   return (
-    <View style={{backgroundColor: bgColor}}>
-      <LinearGradient colors={['#790598', '#BC1399']} style={styles.linearGradient}>
+    <View style={{ backgroundColor: bgColor }}>
+      <LinearGradient colors={[colors.prupleDark, colors.prupleLight]} style={styles.linearGradient}>
         {goBack ? (
           <TouchableOpacity
             onPress={() => navigation.goBack()}
-            style={{position: 'absolute', left: 20, justifyContent: 'center'}}>
+            style={{ position: 'absolute', left: 20, justifyContent: 'center' }}>
             <MaterialCommunityIcons color="#fff" name="arrow-left-thick" size={30} />
           </TouchableOpacity>
         ) : null}

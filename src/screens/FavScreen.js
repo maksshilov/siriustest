@@ -1,5 +1,5 @@
-import React, {Fragment} from 'react'
-import {Dimensions, View, Text, StyleSheet} from 'react-native'
+import React, { Fragment } from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import Header from '../components/Header'
 
 export default function FavScreen() {
