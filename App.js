@@ -1,16 +1,19 @@
-import React, {Fragment} from 'react'
-import {StatusBar} from 'react-native'
-import {NavigationContainer} from '@react-navigation/native'
+import React from 'react'
+import { StatusBar } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { Provider } from 'react-redux'
+// components etc
 import MainNavigator from './src/MainNavigator'
+import store from './src/redux'
 
 const App = () => {
   return (
-    <Fragment>
+    <Provider store={store}>
       <StatusBar />
       <NavigationContainer>
         <MainNavigator />
       </NavigationContainer>
-    </Fragment>
+    </Provider>
   )
 }
 
