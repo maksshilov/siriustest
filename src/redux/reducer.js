@@ -1,4 +1,4 @@
-import { SET_DATA, SET_ERROR, SET_LOADING, SET_PHOTO } from './types'
+import { SET_DATA, SET_ERROR, SET_LOADING, SET_PHOTO, SET_PHOTO_WATCHER } from './types'
 
 const initialState = {
   loading: false,
@@ -14,6 +14,7 @@ const handlers = {
   [SET_DATA]: (state, { gallery }) => ({ ...state, gallery }),
   [SET_LOADING]: (state, { loading }) => ({ ...state, loading }),
   [SET_PHOTO]: (state, { photo }) => ({ ...state, photo }),
+  [SET_PHOTO_WATCHER]: (state, { photo }) => ({ ...state, photo }),
   [SET_ERROR]: (state, { error }) => ({ ...state, error }),
   DEFAULT: state => state,
 }

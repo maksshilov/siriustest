@@ -6,7 +6,7 @@ import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import Header from '../components/Header'
 import Loader from '../components/Loader'
 import { windowWidth } from '../styles/variables'
-import { SET_PHOTO } from '../redux/types'
+import { SET_PHOTO, SET_PHOTO_WATCHER } from '../redux/types'
 import Error from '../components/Error'
 
 export default function MainScreen({ navigation }) {
@@ -22,7 +22,7 @@ export default function MainScreen({ navigation }) {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        dispatch({ type: SET_PHOTO, photo: { id: item.id } })
+        dispatch({ type: SET_PHOTO_WATCHER, photo: { id: item.id } })
         navigation.navigate('Elements', { screen: 'Photo', params: { id: item.id, goBack: true } })
       }}>
       <View

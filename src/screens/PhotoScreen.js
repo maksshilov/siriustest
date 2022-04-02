@@ -7,18 +7,7 @@ import { windowWidth } from '../styles/variables'
 import { useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 
-export default function PhotoScreen({ route, navigation }) {
-  // const { id } = route.params
-  // const [image, setImage] = useState(null)
-
-  // useEffect(() => {
-  //   const client = createClient('563492ad6f91700001000001757b6bd2d3cb4877a0bce035be1e347f')
-  //   client.photos.show({ id }).then(photo => {
-  //     setImage(() => photo.src.large)
-  //   })
-  // }, [])
-
-  const state = useSelector(state => state)
+export default function PhotoScreen({ navigation }) {
   const { loading } = useSelector(state => state)
   const { id, uri } = useSelector(state => state.photo)
 
