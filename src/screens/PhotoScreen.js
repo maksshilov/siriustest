@@ -10,8 +10,8 @@ import { ADD_TO_FAVORITES, DEL_FROM_FAVORITES } from '../redux/types'
 
 export default function PhotoScreen({ navigation }) {
   const dispatch = useDispatch()
+
   const { loading, favorites } = useSelector(state => state)
-  console.log('FAVORITES >>>', favorites)
   const { id, uri } = useSelector(state => state.photo)
 
   const isFavorite = !!favorites.filter(idFav => idFav === id).length
