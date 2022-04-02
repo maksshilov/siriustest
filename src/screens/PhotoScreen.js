@@ -6,28 +6,35 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Header from '../components/Header'
 import { colors, windowWidth } from '../styles/variables'
 import Loader from '../components/Loader'
-import { ADD_TO_FAVORITES, DEL_FROM_FAVORITES } from '../redux/types'
+import { ADD_TO_FAVORITES, DELETE_PHOTO_FROM_GALLERY, DEL_FROM_FAVORITES } from '../redux/types'
 
 export default function PhotoScreen({ navigation }) {
   const dispatch = useDispatch()
 
-  const { loading, favorites } = useSelector(state => state)
+  const { loading, gallery, favorites } = useSelector(state => state)
   const { id, uri } = useSelector(state => state.photo)
 
   const isFavorite = !!favorites.filter(idFav => idFav === id).length
 
   let newFavorites = favorites
+  let newGallery = gallery
 
   function addToFavorites() {
-    console.log('addToFavorites')
     newFavorites.push(id)
     dispatch({ type: ADD_TO_FAVORITES, favorites: newFavorites })
   }
 
   function delFromFavorites() {
-    console.log('delFromFavorites')
     newFavorites = newFavorites.filter(nfId => nfId !== id)
     dispatch({ type: DEL_FROM_FAVORITES, favorites: newFavorites })
+    navigation.goBack()
+  }
+
+  function deletePhotoFromGallery() {
+    delFromFavorites()
+    newGallery = newGallery.filter(ngId => ngId.id !== id)
+    dispatch({ type: DELETE_PHOTO_FROM_GALLERY, gallery: newGallery })
+    navigation.goBack()
   }
 
   return (
@@ -53,7 +60,7 @@ export default function PhotoScreen({ navigation }) {
             </View>
           </TouchableOpacity>
           <View style={{ height: 2, backgroundColor: '#C4C4C4' }}></View>
-          <TouchableOpacity onPress={delFromFavorites}>
+          <TouchableOpacity onPress={deletePhotoFromGallery}>
             <View style={[styles.btnWrapper, styles.btnDelete]}>
               <MaterialCommunityIcons name="delete-outline" color="#000" size={20} />
               <Text style={styles.btnText}>Delete photo</Text>

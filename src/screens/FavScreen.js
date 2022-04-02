@@ -14,8 +14,11 @@ export default function FavScreen({ navigation }) {
 
   const { loading, error, gallery, favorites } = useSelector(state => state)
 
+  const isFavorite = !!favorites.length
+  console.log(isFavorite)
+
   const datafiltered = favorites?.map(favId => gallery?.filter(ph => ph.id === favId)[0])
-  const data = datafiltered.map(ph => ({
+  const data = datafiltered?.map(ph => ({
     id: ph.id,
     uri: ph.src.small,
   }))
@@ -49,8 +52,14 @@ export default function FavScreen({ navigation }) {
         <Error />
       ) : loading ? (
         <Loader />
-      ) : (
+      ) : isFavorite ? (
         <FlatList data={data} keyExtractor={iten => iten.id} renderItem={renderItem} numColumns={4} />
+      ) : (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Text style={{ fontSize: 30 }}>
+            Самое{'\n'}время{'\n'}сюда{'\n'}что-нибудь{'\n'}добавить :)
+          </Text>
+        </View>
       )}
     </Fragment>
   )

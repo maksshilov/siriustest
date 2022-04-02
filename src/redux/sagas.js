@@ -46,5 +46,7 @@ function* loadPhotoWatcher() {
 }
 
 export default function* rootSaga() {
-  yield all([spawn(loadGallery), spawn(loadGalleryWatcher), spawn(loadPhotoWatcher)])
+  const sagas = [loadGallery, loadGalleryWatcher, loadPhotoWatcher].map(s => spawn(s))
+
+  yield all(sagas)
 }

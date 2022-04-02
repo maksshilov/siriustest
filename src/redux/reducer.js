@@ -1,5 +1,6 @@
 import {
   ADD_TO_FAVORITES,
+  DELETE_PHOTO_FROM_GALLERY,
   DEL_FROM_FAVORITES,
   SET_DATA,
   SET_ERROR,
@@ -27,6 +28,7 @@ const handlers = {
   [SET_ERROR]: (state, { error }) => ({ ...state, error }),
   [ADD_TO_FAVORITES]: (state, { favorites }) => ({ ...state, favorites }),
   [DEL_FROM_FAVORITES]: (state, { favorites }) => ({ ...state, favorites }),
+  [DELETE_PHOTO_FROM_GALLERY]: (state, { gallery }) => ({ ...state, gallery }),
   DEFAULT: state => state,
 }
 
