@@ -1,15 +1,34 @@
-import React, { useState, useEffect } from 'react'
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
-import { createClient } from 'pexels'
+import React from 'react'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+// components etc
 import Header from '../components/Header'
-import { windowWidth } from '../styles/variables'
-import { useSelector } from 'react-redux'
+import { colors, windowWidth } from '../styles/variables'
 import Loader from '../components/Loader'
+import { ADD_TO_FAVORITES, DEL_FROM_FAVORITES } from '../redux/types'
 
 export default function PhotoScreen({ navigation }) {
-  const { loading } = useSelector(state => state)
+  const dispatch = useDispatch()
+  const { loading, favorites } = useSelector(state => state)
+  console.log('FAVORITES >>>', favorites)
   const { id, uri } = useSelector(state => state.photo)
+
+  const isFavorite = !!favorites.filter(idFav => idFav === id).length
+
+  let newFavorites = favorites
+
+  function addToFavorites() {
+    console.log('addToFavorites')
+    newFavorites.push(id)
+    dispatch({ type: ADD_TO_FAVORITES, favorites: newFavorites })
+  }
+
+  function delFromFavorites() {
+    console.log('delFromFavorites')
+    newFavorites = newFavorites.filter(nfId => nfId !== id)
+    dispatch({ type: DEL_FROM_FAVORITES, favorites: newFavorites })
+  }
 
   return (
     <>
@@ -23,14 +42,18 @@ export default function PhotoScreen({ navigation }) {
       </View>
       <View style={styles.actionsWrapper}>
         <View style={{ width: windowWidth * 0.8 }}>
-          <TouchableOpacity onPress={() => console.log('Add')}>
+          <TouchableOpacity onPress={isFavorite ? delFromFavorites : addToFavorites}>
             <View style={[styles.btnWrapper, styles.btnAdd]}>
-              <MaterialCommunityIcons name="heart-outline" color="#000" size={20} />
-              <Text style={styles.btnText}>Add to Favorites</Text>
+              <MaterialCommunityIcons
+                name={isFavorite ? 'heart' : 'heart-outline'}
+                color={isFavorite ? colors.prupleLight : '#000'}
+                size={20}
+              />
+              <Text style={styles.btnText}>{isFavorite ? ' Delete from' : ' Add to'} Favorites</Text>
             </View>
           </TouchableOpacity>
           <View style={{ height: 2, backgroundColor: '#C4C4C4' }}></View>
-          <TouchableOpacity onPress={() => console.log('Del')}>
+          <TouchableOpacity onPress={delFromFavorites}>
             <View style={[styles.btnWrapper, styles.btnDelete]}>
               <MaterialCommunityIcons name="delete-outline" color="#000" size={20} />
               <Text style={styles.btnText}>Delete photo</Text>

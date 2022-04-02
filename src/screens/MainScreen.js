@@ -6,7 +6,7 @@ import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
 import Header from '../components/Header'
 import Loader from '../components/Loader'
 import { windowWidth } from '../styles/variables'
-import { SET_PHOTO, SET_PHOTO_WATCHER } from '../redux/types'
+import { SET_PHOTO_WATCHER } from '../redux/types'
 import Error from '../components/Error'
 
 export default function MainScreen({ navigation }) {

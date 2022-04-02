@@ -1,4 +1,12 @@
-import { SET_DATA, SET_ERROR, SET_LOADING, SET_PHOTO, SET_PHOTO_WATCHER } from './types'
+import {
+  ADD_TO_FAVORITES,
+  DEL_FROM_FAVORITES,
+  SET_DATA,
+  SET_ERROR,
+  SET_LOADING,
+  SET_PHOTO,
+  SET_PHOTO_WATCHER,
+} from './types'
 
 const initialState = {
   loading: false,
@@ -8,6 +16,7 @@ const initialState = {
     id: null,
     uri: '',
   },
+  favorites: [],
 }
 
 const handlers = {
@@ -16,6 +25,8 @@ const handlers = {
   [SET_PHOTO]: (state, { photo }) => ({ ...state, photo }),
   [SET_PHOTO_WATCHER]: (state, { photo }) => ({ ...state, photo }),
   [SET_ERROR]: (state, { error }) => ({ ...state, error }),
+  [ADD_TO_FAVORITES]: (state, { favorites }) => ({ ...state, favorites }),
+  [DEL_FROM_FAVORITES]: (state, { favorites }) => ({ ...state, favorites }),
   DEFAULT: state => state,
 }
 
