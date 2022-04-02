@@ -1,55 +1,33 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Fragment } from 'react/cjs/react.production.min'
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
+import { useSelector } from 'react-redux'
 // components etc
 import Header from '../components/Header'
 import Loader from '../components/Loader'
-import { windowWidth } from '../styles/variables'
-import { SET_PHOTO_WATCHER } from '../redux/types'
 import Error from '../components/Error'
+import { SET_PHOTO_WATCHER } from '../redux/types'
+import RenderItem from '../components/RenderItem'
 
-export default function FavScreen({ navigation }) {
-  const dispatch = useDispatch()
-
+export default function FavScreen() {
   const { loading, error, gallery, favorites } = useSelector(state => state)
 
   const isFavorite = !!favorites.length
-  console.log(isFavorite)
 
   const datafiltered = favorites?.map(favId => gallery?.filter(ph => ph.id === favId)[0])
   const data = datafiltered?.map(ph => ({
     id: ph.id,
     uri: ph.src.small,
+    isFavorite: !!favorites.filter(favId => favId === ph.id).length,
   }))
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        dispatch({ type: SET_PHOTO_WATCHER, photo: { id: item.id } })
-        navigation.navigate('Elements', { screen: 'Photo', params: { id: item.id, goBack: true } })
-      }}>
-      <View
-        key={item.id}
-        style={{
-          width: windowWidth / 4,
-          height: windowWidth / 4,
-          padding: 2,
-        }}>
-        <Image
-          source={{ uri: item.uri }}
-          resizeMode="cover"
-          style={{ height: '100%', width: '100%', borderRadius: 10 }}
-        />
-      </View>
-    </TouchableOpacity>
-  )
+  const renderItem = ({ item }) => <RenderItem item={item} type={SET_PHOTO_WATCHER} />
 
   return (
-    <Fragment>
+    <>
       <Header title="Favorites" />
+
       {error ? (
-        <Error />
+        <Error type={TRY_AGAIN_LOAD_GALLERY} />
       ) : loading ? (
         <Loader />
       ) : isFavorite ? (
@@ -61,6 +39,6 @@ export default function FavScreen({ navigation }) {
           </Text>
         </View>
       )}
-    </Fragment>
+    </>
   )
 }

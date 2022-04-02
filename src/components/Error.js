@@ -1,14 +1,13 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { TRY_AGAIN } from '../redux/types'
 import { colors } from '../styles/variables'
 
-export default function Error() {
+export default function Error({ type }) {
   const dispatch = useDispatch()
 
   function handleRetry() {
-    dispatch({ type: TRY_AGAIN })
+    dispatch({ type })
   }
 
   return (

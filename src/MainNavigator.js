@@ -9,7 +9,7 @@ import PhotoScreen from './screens/PhotoScreen'
 
 const MainStack = createNativeStackNavigator()
 
-export default function MainNavigator(params) {
+export default function MainNavigator() {
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name="BottomTabs" component={BottomTabNavigator} />

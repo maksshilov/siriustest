@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 // components etc
 import Header from '../components/Header'
-import { colors, windowWidth } from '../styles/variables'
 import Loader from '../components/Loader'
-import { ADD_TO_FAVORITES, DELETE_PHOTO_FROM_GALLERY, DEL_FROM_FAVORITES } from '../redux/types'
+import { colors, windowWidth } from '../styles/variables'
+import { ADD_TO_FAVORITES, DELETE_PHOTO_FROM_GALLERY, DEL_FROM_FAVORITES, TRY_AGAIN_LOAD_PHOTO } from '../redux/types'
 
 export default function PhotoScreen({ navigation }) {
   const dispatch = useDispatch()
 
-  const { loading, gallery, favorites } = useSelector(state => state)
+  const { error, loading, gallery, favorites } = useSelector(state => state)
   const { id, uri } = useSelector(state => state.photo)
 
   const isFavorite = !!favorites.filter(idFav => idFav === id).length
@@ -25,28 +25,32 @@ export default function PhotoScreen({ navigation }) {
   }
 
   function delFromFavorites() {
-    newFavorites = newFavorites.filter(nfId => nfId !== id)
+    newFavorites = newFavorites?.filter(nfId => nfId !== id)
     dispatch({ type: DEL_FROM_FAVORITES, favorites: newFavorites })
     navigation.goBack()
   }
 
   function deletePhotoFromGallery() {
     delFromFavorites()
-    newGallery = newGallery.filter(ngId => ngId.id !== id)
+    newGallery = newGallery?.filter(ngId => ngId.id !== id)
     dispatch({ type: DELETE_PHOTO_FROM_GALLERY, gallery: newGallery })
     navigation.goBack()
   }
 
   return (
     <>
-      <Header title={`Photo ID: ${id}`} goBack navigation={navigation} bgColor="#000" />
+      <Header title={`Photo ID: ${id}`} goBack bgColor="#000" />
+
       <View style={styles.photoWrapper}>
-        {loading ? (
+        {error ? (
+          <Error type={TRY_AGAIN_LOAD_PHOTO} />
+        ) : loading ? (
           <Loader />
         ) : (
-          <Image source={{ uri }} style={{ width: '100%', height: '100%' }} resizeMode="contain" />
+          <Image source={{ uri }} style={styles.img} resizeMode="contain" />
         )}
       </View>
+
       <View style={styles.actionsWrapper}>
         <View style={{ width: windowWidth * 0.8 }}>
           <TouchableOpacity onPress={isFavorite ? delFromFavorites : addToFavorites}>
@@ -102,5 +106,9 @@ const styles = StyleSheet.create({
   btnText: {
     color: '#000',
     fontSize: 15,
+  },
+  img: {
+    width: '100%',
+    height: '100%',
   },
 })

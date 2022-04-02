@@ -1,11 +1,14 @@
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import LinearGradient from 'react-native-linear-gradient'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 // components etc
 import { colors, windowWidth } from '../styles/variables'
 
-export default function Header({ title, goBack = false, navigation, bgColor = '#e5e5e5' }) {
+export default function Header({ title, goBack = false, bgColor = '#e5e5e5' }) {
+  const navigation = useNavigation()
+
   return (
     <View style={{ backgroundColor: bgColor }}>
       <LinearGradient colors={[colors.prupleDark, colors.prupleLight]} style={styles.linearGradient}>
