@@ -9,9 +9,10 @@ import {
   TRY_AGAIN_LOAD_GALLERY,
   TRY_AGAIN_LOAD_PHOTO,
 } from '../redux/types'
+import { API_KEY, QUERY } from '../../keys'
 
-const client = createClient('563492ad6f91700001000001757b6bd2d3cb4877a0bce035be1e347f')
-const query = 'Nature'
+const client = createClient(API_KEY)
+const query = QUERY
 
 function* loadGallery() {
   try {
